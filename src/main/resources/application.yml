@@ -1,0 +1,78 @@
+server:
+  port: 8080
+
+spring:
+  profiles:
+    active: dev
+  main:
+    allow-circular-references: true
+  datasource:
+    driver-class-name: ${frog.datasource.driver-class-name}
+    url: jdbc:mysql://${frog.datasource.host}:${frog.datasource.port}/${frog.datasource.database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+    username: ${frog.datasource.username}
+    password: ${frog.datasource.password}
+  data:
+    redis:
+      port: ${frog.redis.port}
+      database: ${frog.redis.database}
+      host: ${frog.redis.host}
+    # 静态资源配置
+  web:
+    resources:
+      static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/
+      add-mappings: true
+      cache:
+        period: 0  # 开发环境不缓存
+
+mybatis:
+  #mapper配置文件
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.frog.pojo.entity
+  configuration:
+    #开启驼峰命名
+    map-underscore-to-camel-case: true
+
+logging:
+  level:
+    com:
+      frog:
+        mapper: debug
+        service: info
+        controller: info
+
+frog:
+  jwt:
+    # 设置jwt签名加密时使用的秘钥
+    admin-secret-key: frogAdmin
+    # 设置jwt过期时间
+    admin-ttl: 7200000
+    # 设置前端传递过来的令牌名称
+    admin-token-name: token
+
+    # 员工端员工生成jwt令牌相关配置
+    employee-secret-key: frogEmployee
+    employee-ttl: 7200000
+    employee-token-name: employeeToken
+
+
+    #用户端微信用户生成jwt令牌相关配置
+    user-secret-key: frogUser
+    user-ttl: 7200000
+    user-token-name: authentication
+
+
+  wechat:
+    secret: ${frog.wechat.secret}
+    appid: ${frog.wechat.appid}
+
+# ========== SpringDoc 配置 ==========
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+    enabled: true
+  swagger-ui:
+    path: /swagger-ui.html  # 原生 Swagger UI 路径
+    enabled: true
+    operations-sorter: method
+    tags-sorter: alpha
+    display-request-duration: true
