@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Data
 @Builder
-public class PackageService implements Serializable {
+public class PackageServices implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long id;

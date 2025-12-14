@@ -4,7 +4,7 @@
 <mapper namespace="com.frog.server.mapper.EmployeeMapper">
 
     <!-- 分页查询员工 -->
-    <select id="pageQuery" resultType="com.frog.server.entity.Employee">
+    <select id="pageQuery" resultType="com.frog.pojo.entity.Employee">
         select * from employee
         <where>
             <if test="name != null and name != ''">
@@ -15,7 +15,7 @@
     </select>
 
     <!-- 更新员工信息 -->
-    <update id="update" parameterType="com.frog.server.entity.Employee">
+    <update id="update" parameterType="com.frog.pojo.entity.Employee">
         update employee
         <set>
             <if test="username != null">username = #{username},</if>

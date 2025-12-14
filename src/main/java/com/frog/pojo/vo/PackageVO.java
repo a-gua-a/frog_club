@@ -1,5 +1,5 @@
-package com.frog.pojo.entity;
-
+package com.frog.pojo.vo;
+import com.frog.pojo.entity.PackageServices;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,13 +8,14 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
-@NoArgsConstructor
-@AllArgsConstructor
 @Data
 @Builder
-public class Package implements Serializable {
-    private static final long serialVersionUID = 1L;
+@NoArgsConstructor
+@AllArgsConstructor
+public class PackageVO implements Serializable {
 
     private Long id;
 
@@ -24,7 +25,7 @@ public class Package implements Serializable {
     //套餐名称
     private String name;
 
-    //一条龙价格
+    //套餐价格
     private BigDecimal price;
 
     //状态 0:停用 1:启用
@@ -36,11 +37,12 @@ public class Package implements Serializable {
     //图片
     private String image;
 
-    private LocalDateTime createTime;
-
+    //更新时间
     private LocalDateTime updateTime;
 
-    private Long createUser;
+    //分类名称
+    private String categoryName;
 
-    private Long updateUser;
+    //套餐和菜品的关联关系
+    private List<PackageServices> packageServices = new ArrayList<>();
 }

@@ -58,7 +58,7 @@ public class AdminServiceImpl implements AdminService {
 
         //登录成功后，生成jwt令牌
         Map<String, Object> claims = new HashMap<>();
-        claims.put(JwtClaimsConstant.EMP_ID, admin.getId());
+        claims.put(JwtClaimsConstant.ADM_ID, admin.getId());
         String token = JwtUtil.createJWT(
                 jwtProperties.getAdminSecretKey(),
                 jwtProperties.getAdminTtl(),

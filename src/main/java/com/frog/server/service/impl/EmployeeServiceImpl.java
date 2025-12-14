@@ -37,6 +37,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setPassword(DigestUtils.md5DigestAsHex(PasswordConstant.DEFAULT_PASSWORD.getBytes()));
         employee.setStatus(StatusConstant.ENABLE);
         employee.setOnline(StatusConstant.OFFLINE);
+        log.info("新增员工：{}", employee);
         employeeMapper.insert(employee);
     }
 
@@ -63,6 +64,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         return new PageResult(employeeList.getTotal(), employeeList.getResult());
     }
 
+    /**
+     * 更新员工信息
+     * @param employeeDTO
+     */
     @Override
     public void update(EmployeeDTO employeeDTO) {
         Employee employee = new Employee();
@@ -70,6 +75,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         employeeMapper.update(employee);
     }
 
+    /**
+     * 启用禁用员工账号
+     * @param status
+     * @param id
+     */
     @Override
     public void startOrStop(Integer status, Long id) {
         Employee employee = employeeMapper.selectById(id);

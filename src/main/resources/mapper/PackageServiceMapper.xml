@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.frog.server.mapper.PackageServiceMapper">
+        <!-- 新增套餐菜品 -->
+        <insert id="insert">
+            insert into package_service (package_id, service_id, name, price, copies)
+            values (#{packageId}, #{serviceId}, #{name}, #{price}, #{copies})
+        </insert>
+
+        <!-- 根据套餐id删除套餐菜品 -->
+        <delete id="deleteByPackageId">
+            delete from package_service where package_id = #{id}
+        </delete>
+</mapper>

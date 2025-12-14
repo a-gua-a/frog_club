@@ -1,16 +1,14 @@
 package com.frog.pojo.dto;
 
-import lombok.*;
+import lombok.Data;
 
 import java.io.Serializable;
 
 @Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class AdminLoginDTO implements Serializable {
+public class EmployeeLoginDTO implements Serializable {
 
     private String username;
+
     private String password;
 
 }
