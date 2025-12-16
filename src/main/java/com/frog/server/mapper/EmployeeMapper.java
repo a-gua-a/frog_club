@@ -39,4 +39,11 @@ public interface EmployeeMapper {
          */
         @AutoFill(OperationType.UPDATE)
         void update(Employee employee);
+
+        /**
+         * 根据用户名查询员工
+         * @param username
+         */
+        @Select("select * from employee where username = #{username}")
+        Employee getByUsername(String username);
 }

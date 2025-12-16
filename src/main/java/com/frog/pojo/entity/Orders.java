@@ -17,15 +17,14 @@ import java.time.LocalDateTime;
 public class Orders implements Serializable {
 
     /**
-     * 订单状态 1待付款 2待接单 3已接单 4服务中 5已完成 6已取消
+     * 订单状态 1待付款 2待接单 3已接单 4已完成 5已取消 6已退款
      */
     public static final Integer PENDING_PAYMENT = 1;
     public static final Integer TO_BE_CONFIRMED = 2;
-    public static final Integer CONFIRMED = 3;
-    public static final Integer IN_PROGRESS = 4;
-    public static final Integer COMPLETED = 5;
-    public static final Integer CANCELLED = 6;
-    public static final Integer REFUNDED = 7;
+    public static final Integer IN_PROGRESS = 3;
+    public static final Integer COMPLETED = 4;
+    public static final Integer CANCELLED = 5;
+    public static final Integer REFUNDED = 6;
 
     /**
      * 支付状态 0未支付 1已支付 2退款
@@ -46,6 +45,9 @@ public class Orders implements Serializable {
 
     //下单用户id
     private Long userId;
+
+    //信息id
+    private Long messageBookId;
 
     //下单时间
     private LocalDateTime orderTime;
@@ -75,7 +77,7 @@ public class Orders implements Serializable {
     private String employeeName;
 
     //打手id
-    private String employeeId;
+    private Long employeeId;
 
     //订单取消原因
     private String cancelReason;

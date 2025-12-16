@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.frog.server.mapper.PreOrderMapper">
+    <!-- 查看购物车 -->
+    <select id="list" resultType="com.frog.pojo.entity.PreOrder">
+        select * from pre_order
+        <where>
+            <if test="userId != null">user_id = #{userId}</if>
+            <if test="packageId != null">and package_id = #{packageId}</if>
+            <if test="serviceId != null">and service_id = #{serviceId}</if>
+            <if test="serviceDetail != null">and service_detail = #{serviceDetail}</if>
+        </where>
+    </select>
+
+    <!-- 添加购物车 -->
+    <insert id="insert" parameterType="com.frog.pojo.entity.PreOrder">
+        insert into pre_order
+        <set>
+            <if test="packageId != null">package_id = #{packageId},</if>
+            <if test="serviceId != null">service_id = #{serviceId},</if>
+            <if test="serviceDetail != null">service_detail = #{serviceDetail},</if>
+            <if test="image != null">image = #{image},</if>
+            <if test="name!=null">name = #{name},</if>
+            number = #{number},
+            create_time = #{createTime},
+            user_id = #{userId},
+            amount = #{amount}
+        </set>
+    </insert>
+
+     <!-- 更新购物车 -->
+    <update id="update" parameterType="com.frog.pojo.entity.PreOrder">
+        update pre_order
+        <set>
+            <if test="number != null">number = #{number},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="packageId != null">package_id = #{packageId},</if>
+            <if test="serviceId != null">service_id = #{serviceId},</if>
+            <if test="serviceDetail != null">service_detail = #{serviceDetail},</if>
+            <if test="amount != null">amount = #{amount},</if>
+        </set>
+        where id = #{id}
+    </update>
+
+     <!-- 删除购物车 -->
+    <delete id="delete" parameterType="com.frog.pojo.entity.PreOrder">
+        delete from pre_order
+        <where>
+            <if test="userId != null">user_id = #{userId}</if>
+            <if test="packageId != null">and package_id = #{packageId}</if>
+            <if test="serviceId != null">and service_id = #{serviceId}</if>
+            <if test="serviceDetail != null">and service_detail = #{serviceDetail}</if>
+        </where>
+    </delete>
+
+    <!-- 删除用户购物车 -->
+    <delete id="deleteByUserId" parameterType="java.lang.Long">
+        delete from pre_order where user_id = #{userId}
+    </delete>
+
+     <!-- 批量添加购物车 -->
+    <insert id="insertBatch" parameterType="java.util.List">
+        insert into pre_order
+        (service_id, package_id, service_detail, image, name, number, create_time, user_id, amount)
+        values
+        <foreach collection="preOrderList" item="item" separator=",">
+            (#{item.serviceId}, #{item.packageId}, #{item.serviceDetail}, #{item.image}, #{item.name}, #{item.number}, #{item.createTime}, #{item.userId}, #{item.amount})
+        </foreach>
+    </insert>
+</mapper>

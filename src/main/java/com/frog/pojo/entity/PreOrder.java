@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Data
 @Builder
-public class PreOder implements Serializable {
+public class PreOrder implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long id;

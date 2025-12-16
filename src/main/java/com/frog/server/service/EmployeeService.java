@@ -2,8 +2,12 @@ package com.frog.server.service;
 
 import com.frog.common.result.PageResult;
 import com.frog.pojo.dto.EmployeeDTO;
+import com.frog.pojo.dto.EmployeeLoginDTO;
 import com.frog.pojo.dto.EmployeePageQueryDTO;
 import com.frog.pojo.entity.Employee;
+import com.frog.pojo.vo.EmployeeLoginVO;
+
+import javax.security.auth.login.AccountNotFoundException;
 
 public interface EmployeeService {
     /**
@@ -36,4 +40,9 @@ public interface EmployeeService {
       * @param id
       */
     void startOrStop(Integer status, Long id);
+
+    /*
+     * 员工登录
+     */
+    EmployeeLoginVO login(EmployeeLoginDTO employeeLoginDTO);
 }
