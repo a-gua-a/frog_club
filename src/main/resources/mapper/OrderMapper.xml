@@ -10,6 +10,7 @@
                 #{payStatus}, #{amount}, #{remark}, #{phone},#{employeeId},#{employeeName})
     </insert>
 
+    <!-- 更新订单 -->
     <update id="update" parameterType="com.frog.pojo.entity.Orders">
         update orders
         <set>
@@ -41,6 +42,7 @@
         where id = #{id}
     </update>
 
+    <!-- 分页查询订单 -->
     <select id="pageQuery" parameterType="com.frog.pojo.dto.OrdersPageQueryDTO" resultType="com.frog.pojo.entity.Orders">
         select * from orders
         <where>
@@ -66,4 +68,24 @@
         order by order_time desc
     </select>
 
+    <select id="list" parameterType="com.frog.pojo.entity.Orders" resultType="com.frog.pojo.entity.Orders">
+        select * from orders
+        <where>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="number != null and number!='' ">
+                and number = #{number}
+            </if>
+            <if test="phone != null and phone!='' ">
+                and phone like concat('%',#{phone},'%')
+            </if>
+            <if test="orderTime != null">
+                and order_time = #{orderTime}
+            </if>
+        </where>
+    </select>
 </mapper>

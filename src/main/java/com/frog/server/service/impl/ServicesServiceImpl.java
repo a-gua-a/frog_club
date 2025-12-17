@@ -19,6 +19,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -125,5 +126,25 @@ public class ServicesServiceImpl implements ServicesService {
                 .build();
         List<Services> servicesList = servicesMapper.list(services);
         return servicesList;
+    }
+
+    @Override
+    public List<ServicesVO> listWithDetail(Services services) {
+        List<Services> servicesList = servicesMapper.list(services);
+
+        List<ServicesVO> servicesVOList = new ArrayList<>();
+
+        for (Services s : servicesList) {
+            ServicesVO servicesVO = new ServicesVO();
+            BeanUtils.copyProperties(s,servicesVO);
+
+            //根据服务id查询对应的服务详情
+            List<ServiceDetail> serviceDetails = serviceDetailMapper.selectByServiceId(s.getId());
+
+            servicesVO.setServiceDetails(serviceDetails);
+            servicesVOList.add(servicesVO);
+        }
+
+        return servicesVOList;
     }
 }

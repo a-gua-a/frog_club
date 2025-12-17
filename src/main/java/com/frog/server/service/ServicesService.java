@@ -39,4 +39,9 @@ public interface ServicesService {
      * 根据分类id查询服务
      */
     List<Services> getByCategoryId(Long categoryId);
+
+    /**
+     * 条件查询服务及详情
+     */
+    List<ServicesVO> listWithDetail(Services services);
 }

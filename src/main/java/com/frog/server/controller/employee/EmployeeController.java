@@ -28,4 +28,14 @@ public class EmployeeController {
         EmployeeLoginVO employeeLoginVO = employeeService.login(employeeLoginDTO);
         return Result.success(employeeLoginVO);
     }
+
+    /**
+     * 员工退出登录
+     */
+    @PostMapping("/logout")
+    public Result<Void> logout() {
+        log.info("员工退出登录");
+        employeeService.logout();
+        return Result.success();
+    }
 }

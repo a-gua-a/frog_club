@@ -45,4 +45,9 @@ public interface EmployeeService {
      * 员工登录
      */
     EmployeeLoginVO login(EmployeeLoginDTO employeeLoginDTO);
+
+    /**
+     * 员工退出登录
+     */
+    void logout();
 }

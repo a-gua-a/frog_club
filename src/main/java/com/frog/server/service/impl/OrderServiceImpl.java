@@ -1,5 +1,6 @@
 package com.frog.server.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.frog.common.constant.MessageConstant;
 import com.frog.common.context.BaseContext;
@@ -16,6 +17,7 @@ import com.frog.pojo.vo.OrderSubmitVO;
 import com.frog.pojo.vo.OrderVO;
 import com.frog.server.mapper.*;
 import com.frog.server.service.OrderService;
+import com.frog.server.websocket.WebSocketServer;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
@@ -25,9 +27,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.net.http.WebSocket;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -48,6 +53,8 @@ public class OrderServiceImpl implements OrderService {
     private WeChatPayUtil weChatPayUtil;
     @Autowired
     private MessageBookMapper messageBookMapper;
+    @Autowired
+    private WebSocketServer webSocketServer;
 
     /**
      * 用户下单
@@ -119,6 +126,7 @@ public class OrderServiceImpl implements OrderService {
      * @param ordersPaymentDTO
      * @return
      */
+    @Override
     public OrderPaymentVO payment(OrdersPaymentDTO ordersPaymentDTO) throws Exception {
         // 当前登录用户id
         Long userId = BaseContext.getCurrentId();
@@ -147,6 +155,7 @@ public class OrderServiceImpl implements OrderService {
      *
      * @param outTradeNo
      */
+    @Override
     public void paySuccess(String outTradeNo) {
 
         // 根据订单号查询订单
@@ -161,11 +170,20 @@ public class OrderServiceImpl implements OrderService {
                 .build();
 
         orderMapper.update(orders);
+
+        Map map = new HashMap();
+        map.put("type", 1);
+        map.put("order", ordersDB.getId());
+        map.put("content", "订单号:"+ordersDB.getNumber());
+        // 调用websocket服务，向客户端发送消息
+        String json = JSON.toJSONString(map);
+        webSocketServer.sendToAllClient(json);
     }
 
     /**
      * 历史订单查询
      */
+    @Override
     public PageResult pageQuery(OrdersPageQueryDTO ordersPageQueryDTO) {
         PageHelper.startPage(ordersPageQueryDTO.getPage(), ordersPageQueryDTO.getPageSize());
         // 设置当前用户id
@@ -403,7 +421,30 @@ public class OrderServiceImpl implements OrderService {
             x.setEndTime(LocalDateTime.now());
         });
         orderDetailMapper.updateBatch(orderDetailList);
-
     }
 
+
+    /**
+     * 用户催单
+     * @param orderId
+     */
+    @Override
+    public void reminder(Long orderId) {
+        // 根据订单id查询订单
+        Orders ordersDB = orderMapper.getById(orderId);
+        if (ordersDB == null) {
+            throw new OrderBusinessException(MessageConstant.ORDER_NOT_FOUND);
+        }
+        // 校验订单状态
+        if (ordersDB.getStatus() != Orders.TO_BE_CONFIRMED) {
+            throw new OrderBusinessException(MessageConstant.ORDER_STATUS_ERROR);
+        }
+
+        Map map = new HashMap();
+        map.put("type",2);
+        map.put("orderId", orderId);
+        map.put("content","订单号:" + ordersDB.getNumber());
+        String json = JSON.toJSONString(map);
+        webSocketServer.sendToAllClient(json);
+    }
 }

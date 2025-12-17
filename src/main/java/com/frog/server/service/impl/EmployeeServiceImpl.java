@@ -4,6 +4,7 @@ import com.frog.common.constant.JwtClaimsConstant;
 import com.frog.common.constant.MessageConstant;
 import com.frog.common.constant.PasswordConstant;
 import com.frog.common.constant.StatusConstant;
+import com.frog.common.context.BaseContext;
 import com.frog.common.exception.AccountLockedException;
 import com.frog.common.exception.PasswordErrorException;
 import com.frog.common.exception.AccountNotFoundException;
@@ -38,7 +39,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
     private JwtProperties jwtProperties;
 
-    /*
+    /**
      * 新增员工
      * @param employeeDTO
      */
@@ -132,6 +133,11 @@ public class EmployeeServiceImpl implements EmployeeService {
             //账号被锁定
             throw new AccountLockedException(MessageConstant.ACCOUNT_LOCKED);
         }
+
+        //设置员工为在线状态
+        employee.setOnline(StatusConstant.ONLINE);
+        employeeMapper.update(employee);
+
         //登录成功后，生成jwt令牌
         Map<String, Object> claims = new HashMap<>();
         claims.put(JwtClaimsConstant.EMP_ID, employee.getId());
@@ -147,5 +153,18 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .build();
         //3、返回实体对象
         return employeeLoginVO;
+    }
+
+    @Override
+    public void logout() {
+        //1、获取当前员工id
+        Long empId = BaseContext.getCurrentId();
+        //2、根据员工id更新员工状态为离线
+        Employee employee = employeeMapper.selectById(empId);
+        if (employee == null) {
+            throw new AccountNotFoundException(MessageConstant.ACCOUNT_NOT_FOUND);
+        }
+        employee.setOnline(StatusConstant.OFFLINE);
+        employeeMapper.update(employee);
     }
 }

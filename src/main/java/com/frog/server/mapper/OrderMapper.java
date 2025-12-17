@@ -6,6 +6,8 @@ import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+
 @Mapper
 public interface OrderMapper {
     /**
@@ -43,4 +45,9 @@ public interface OrderMapper {
       */
     @Select("select count(*) from orders where status = #{status}")
     Integer countStatus(Integer status);
+
+    /**
+     * 条件查询订单
+     */
+     List<Orders> list(Orders orders);
 }
