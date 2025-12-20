@@ -64,15 +64,3 @@ frog:
   wechat:
     secret: ${frog.wechat.secret}
     appid: ${frog.wechat.appid}
-
-# ========== SpringDoc 配置 ==========
-springdoc:
-  api-docs:
-    path: /v3/api-docs
-    enabled: true
-  swagger-ui:
-    path: /swagger-ui.html  # 原生 Swagger UI 路径
-    enabled: true
-    operations-sorter: method
-    tags-sorter: alpha
-    display-request-duration: true
