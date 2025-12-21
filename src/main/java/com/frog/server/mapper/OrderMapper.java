@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface OrderMapper {
@@ -50,4 +51,16 @@ public interface OrderMapper {
      * 条件查询订单
      */
      List<Orders> list(Orders orders);
+
+    /**
+     * 根据时间范围统计营业额
+     * @param map
+     * @return
+     */
+    Double sumTurnover(Map<String, Object> map);
+
+     /**
+      * 根据时间范围统计订单数量
+      */
+    Integer countOrder(Map<String, Object> map);
 }

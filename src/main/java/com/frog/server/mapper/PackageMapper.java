@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface PackageMapper {
@@ -64,4 +65,11 @@ public interface PackageMapper {
             "from package_service ps left join service s on ps.service_id = s.id " +
             "where ps.package_id = #{packageId}")
     List<ServiceItemVO> getServiceItemByPackageId(Long packageId);
+
+    /**
+     * 根据条件统计套餐数量
+     * @param map
+     * @return
+     */
+    Integer countByMap(Map map);
 }

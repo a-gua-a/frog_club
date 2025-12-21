@@ -18,6 +18,8 @@ public class OrderOverViewVO implements Serializable {
     //待接单数量
     private Integer waitingOrders;
 
+    //进行中订单数量
+    private Integer inProgressOrders;
 
     //已完成数量
     private Integer completedOrders;

@@ -11,6 +11,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface ServicesMapper {
@@ -53,4 +54,11 @@ public interface ServicesMapper {
       */
      @Select("select count(*) from service where category_id = #{id}")
      Integer countByCategoryId(Long id);
+
+    /**
+     * 根据条件统计服务数量
+     * @param map
+     * @return
+     */
+    Integer countByMap(Map map);
 }

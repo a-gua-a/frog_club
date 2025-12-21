@@ -24,4 +24,24 @@
             where id = #{orderDetail.id}
         </foreach>
     </update>
+
+    <!-- 获取销售Top10商品 -->
+    <select id="getSalesTop10" parameterType="map" resultType="com.frog.pojo.dto.GoodsSalesDTO">
+        select od.name, sum(od.number) as number from order_detail od, orders o
+        <where>
+            <if test="start != null">
+                and o.order_time >= #{start}
+            </if>
+            <if test="end != null">
+                and o.order_time &lt;= #{end}
+            </if>
+            <if test="status != null">
+                and o.status = #{status}
+            </if>
+            od.order_id = o.id
+        </where>
+        group by od.name
+        order by number desc
+        limit 10
+    </select>
 </mapper>

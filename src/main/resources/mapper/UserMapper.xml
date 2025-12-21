@@ -7,4 +7,17 @@
             insert into user(openid, name, phone, sex, id_number, avatar, create_time)
             VALUES (#{openid}, #{name}, #{phone}, #{sex}, #{idNumber}, #{avatar}, #{createTime})
         </insert>
+
+        <!-- 根据时间范围统计用户数量 -->
+        <select id="countUser" resultType="java.lang.Integer">
+            select count(*) from user
+            <where>
+                <if test="startTime != null">
+                    create_time >= #{startTime}
+                </if>
+                <if test="endTime != null">
+                    and create_time <= #{endTime}
+                </if>
+            </where>
+        </select>
 </mapper>
