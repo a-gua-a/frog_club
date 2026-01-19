@@ -28,6 +28,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -166,5 +167,15 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         employee.setOnline(StatusConstant.OFFLINE);
         employeeMapper.update(employee);
+    }
+
+    @Override
+    public void deleteBatch(List<Long> ids) {
+        employeeMapper.deleteBatch(ids);
+    }
+
+    @Override
+    public void delete(Long id) {
+        employeeMapper.delete(id);
     }
 }

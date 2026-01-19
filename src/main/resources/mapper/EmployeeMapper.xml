@@ -31,4 +31,12 @@
         </set>
         where id = #{id}
     </update>
+
+    <!-- 批量删除员工-->
+    <delete id="deleteBatch">
+        delete from employee where id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
 </mapper>

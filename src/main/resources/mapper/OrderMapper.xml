@@ -4,9 +4,9 @@
 
     <insert id="insert" parameterType="Orders" useGeneratedKeys="true" keyProperty="id">
         insert into orders
-        (number, status, user_id,message_book_id, order_time, checkout_time, pay_method, pay_status, amount, remark,
+        (number, status, user_id, user_name, message_book_id, order_time, checkout_time, pay_method, pay_status, amount, remark,
          phone,employee_id,employee_name)
-        values (#{number}, #{status}, #{userId},#{messageBookId}, #{orderTime}, #{checkoutTime}, #{payMethod},
+        values (#{number}, #{status}, #{userId},#{userName}, #{messageBookId}, #{orderTime}, #{checkoutTime}, #{payMethod},
                 #{payStatus}, #{amount}, #{remark}, #{phone},#{employeeId},#{employeeName})
     </insert>
 
@@ -37,6 +37,12 @@
             </if>
             <if test="messageBookId != null">
                 message_book_id=#{messageBookId},
+            </if>
+            <if test="employeeId != null">
+                employee_id=#{employeeId},
+            </if>
+            <if test="employeeName != null and employeeName!='' ">
+                employee_name=#{employeeName},
             </if>
         </set>
         where id = #{id}

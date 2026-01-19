@@ -47,5 +47,5 @@ public class OrderDetail implements Serializable {
     private LocalDateTime startTime;
 
     //服务结束时间
-    private LocalDateTime endTime;
+    private LocalDateTime finishTime;
 }

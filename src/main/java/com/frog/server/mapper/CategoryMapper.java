@@ -8,6 +8,7 @@ import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -55,5 +56,6 @@ public interface CategoryMapper {
     /**
      * 根据id查询分类
      */
+    @Select("select * from category where id = #{id}")
     Category selectById(Long id);
 }

@@ -10,7 +10,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+import java.util.List;
+
+@RestController("adminEmployeeController")
 @RequestMapping("/admin/employee")
 @Slf4j
 public class EmployeeController {
@@ -20,17 +22,19 @@ public class EmployeeController {
 
     /**
      * 新增员工
+     *
      * @return
      */
     @PostMapping("/save")
-    public Result save(@RequestBody EmployeeDTO employeeDTO){
-        log.info("新增员工:{}",employeeDTO);
+    public Result save(@RequestBody EmployeeDTO employeeDTO) {
+        log.info("新增员工:{}", employeeDTO);
         employeeService.save(employeeDTO);
         return Result.success();
     }
 
     /**
      * 根据id查询员工
+     *
      * @param id
      * @return
      */
@@ -42,6 +46,7 @@ public class EmployeeController {
 
     /**
      * 分页查询员工
+     *
      * @param employeePageQueryDTO
      * @return
      */
@@ -53,6 +58,7 @@ public class EmployeeController {
 
     /**
      * 更新员工信息
+     *
      * @param employeeDTO
      * @return
      */
@@ -64,6 +70,7 @@ public class EmployeeController {
 
     /**
      * 启用禁用员工账号
+     *
      * @param status
      * @param id
      * @return
@@ -73,4 +80,27 @@ public class EmployeeController {
         employeeService.startOrStop(status, id);
         return Result.success();
     }
+
+    /**
+     * 批量删除员工
+     *
+     * @param ids
+     * @return
+     */
+    @DeleteMapping("/deleteBatch")
+    public Result deleteBatch(@RequestBody List<Long> ids) {
+        employeeService.deleteBatch(ids);
+        return Result.success();
+    }
+
+    /**
+     * 删除员工
+     * @param id
+     * @return
+     */
+     @DeleteMapping("/{id}")
+     public Result delete(@PathVariable Long id) {
+        employeeService.delete(id);
+        return Result.success();
+     }
 }

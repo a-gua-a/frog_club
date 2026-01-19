@@ -5,9 +5,12 @@ import com.frog.pojo.dto.EmployeePageQueryDTO;
 import com.frog.pojo.entity.Employee;
 import com.frog.server.annotation.AutoFill;
 import com.github.pagehelper.Page;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 @Mapper
 public interface EmployeeMapper {
@@ -46,4 +49,17 @@ public interface EmployeeMapper {
          */
         @Select("select * from employee where username = #{username}")
         Employee getByUsername(String username);
+
+        /**
+         * 删除员工
+         * @param id
+         */
+        @Delete("delete from employee where id = #{id}")
+        void delete(Long id);
+
+        /**
+         * 批量删除员工
+         * @param ids
+         */
+        void deleteBatch(List<Long> ids);
 }

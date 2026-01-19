@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+@RestController("employeeOrderController")
 @RequestMapping("/employee/order")
 @Slf4j
 public class OrderController {
@@ -43,7 +43,7 @@ public class OrderController {
      * 接单
      */
     @PutMapping("/confirm")
-    public Result confirm(OrdersConfirmDTO ordersConfirmDTO) {
+    public Result confirm(@RequestBody OrdersConfirmDTO ordersConfirmDTO) {
         log.info("接单: {}", ordersConfirmDTO);
         orderService.confirm(ordersConfirmDTO);
         return Result.success();

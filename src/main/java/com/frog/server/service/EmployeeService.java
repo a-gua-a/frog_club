@@ -6,8 +6,7 @@ import com.frog.pojo.dto.EmployeeLoginDTO;
 import com.frog.pojo.dto.EmployeePageQueryDTO;
 import com.frog.pojo.entity.Employee;
 import com.frog.pojo.vo.EmployeeLoginVO;
-
-import javax.security.auth.login.AccountNotFoundException;
+import java.util.List;
 
 public interface EmployeeService {
     /**
@@ -50,4 +49,16 @@ public interface EmployeeService {
      * 员工退出登录
      */
     void logout();
+
+    /**
+     * 批量删除员工
+     * @param ids
+     */
+    void deleteBatch(List<Long> ids);
+
+    /**
+     * 删除员工
+     * @param id
+     */
+    void delete(Long id);
 }

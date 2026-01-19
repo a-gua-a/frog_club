@@ -27,18 +27,27 @@ public class PreOrderController {
         return Result.success(list);
     }
 
+    /**
+     * 新增购物车
+     */
     @PostMapping("/add")
     public Result add(@RequestBody PreOrderDTO preOrderDTO) {
         preOrderService.add(preOrderDTO);
         return Result.success();
     }
 
+    /**
+     * 清空购物车
+     */
     @DeleteMapping("/clean")
     public Result clean() {
         preOrderService.clean();
         return Result.success();
     }
 
+    /**
+     * 减少购物车
+     */
     @PostMapping("/sub")
     public Result sub(@RequestBody PreOrderDTO preOrderDTO) {
         preOrderService.sub(preOrderDTO);

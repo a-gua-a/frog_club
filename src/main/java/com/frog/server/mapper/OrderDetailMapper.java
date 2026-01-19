@@ -28,9 +28,9 @@ public interface OrderDetailMapper {
 
      /**
       * 批量更新订单详情
-      * @param orderDetailList
+      * @param orderDetail
       */
-    void updateBatch(List<OrderDetail> orderDetailList);
+    void update(OrderDetail orderDetail);
 
     /**
      * 获取销售Top10商品

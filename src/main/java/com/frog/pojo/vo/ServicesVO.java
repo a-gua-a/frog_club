@@ -34,6 +34,6 @@ public class ServicesVO {
     private LocalDateTime updateTime;
     //分类名称
     private String categoryName;
-    //菜品关联的口味
+    //服务详情
     private List<ServiceDetail> serviceDetails = new ArrayList<>();
 }

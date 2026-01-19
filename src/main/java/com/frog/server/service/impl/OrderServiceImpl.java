@@ -317,18 +317,24 @@ public class OrderServiceImpl implements OrderService {
             throw new OrderBusinessException(MessageConstant.ORDER_STATUS_ERROR);
         }
         // 更新订单状态
+        //todo 测试
         Orders updatedOrders = Orders.builder()
                 .id(ordersConfirmDTO.getId())
                 .status(Orders.IN_PROGRESS)
+                .employeeName("employee")
                 .build();
         orderMapper.update(updatedOrders);
+        log.info("接单：{}", updatedOrders);
+
 
         // 记录接单时间
         List<OrderDetail> orderDetailList = orderDetailMapper.listByOrderId(ordersConfirmDTO.getId());
         orderDetailList.forEach(x -> {
             x.setStartTime(LocalDateTime.now());
         });
-        orderDetailMapper.updateBatch(orderDetailList);
+        orderDetailList.forEach(od -> {
+            orderDetailMapper.update(od);
+        });
     }
 
     /**
@@ -418,9 +424,11 @@ public class OrderServiceImpl implements OrderService {
         // 记录结单时间
         List<OrderDetail> orderDetailList = orderDetailMapper.listByOrderId(orderId);
         orderDetailList.forEach(x -> {
-            x.setEndTime(LocalDateTime.now());
+            x.setFinishTime(LocalDateTime.now());
         });
-        orderDetailMapper.updateBatch(orderDetailList);
+        orderDetailList.forEach(od -> {
+            orderDetailMapper.update(od);
+        });
     }
 
 

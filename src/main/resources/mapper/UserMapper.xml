@@ -16,7 +16,7 @@
                     create_time >= #{startTime}
                 </if>
                 <if test="endTime != null">
-                    and create_time <= #{endTime}
+                    and create_time &amp;lt= #{endTime}
                 </if>
             </where>
         </select>
